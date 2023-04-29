@@ -1,26 +1,147 @@
 <html>
 <head>
-  <title>love you</title>
+  <title>Sorry!!</title>
 <style>
-h4, h2{
-font-size:6em;
-color:red;
-}
+$blue1: #355f94
+$blue2: #6dacfb
+$white: #ffffff
+$black: #2e2e2e
+$pink: #de6183
+
+*, ::after, ::before
+  box-sizing: border-box
+
+body
+  display: flex
+  flex-direction: column
+  min-width: 320px
+  height: 100vh
+  margin: 0
+  font-size: 16px
+  overflow-x: hidden
+  
+section
+  width: 100%
+  flex: 1 0 50%
+  display: flex
+  justify-content: center
+  align-items: center
+  
+.bg-colored
+  background-image: linear-gradient(45deg, $blue1 0%, $blue2 100%)
+  color: $white
+  padding: 0 200px
+ 
+h1 
+  letter-spacing: 0.1em
+  font-family: Verdana, sans-serif
+  position: relative
+  font-size: 1.8rem
+  font-weight: 500
+  margin: 0
+  padding: 10px 0
+  
+.bg-white 
+  h1
+    &::before
+      content: ''
+      position: absolute
+      top: -.5em
+      left: -1em
+      width: calc(100% + 2em)
+      height: calc(100% + 1em)
+      background-color: $white
+      animation-name: reveal
+      animation-duration: 4s
+      animation-timing-function: ease-out
+      animation-iteration-count: infinite
+    
+.bg-colored
+  h1
+    width: 100%
+    animation-name: reveal-colored
+    animation-duration: 4s
+    animation-timing-function: ease-out
+    animation-iteration-count: infinite
+    overflow: hidden
+    white-space: nowrap
+    text-align: left
+    position: absolute
+    left: calc(50% - 10rem)
+    font-size: 0
+    
+    &::before
+      font-size: 1.8rem
+      letter-spacing: 0.1em
+      content: 'You\'re awesome!'
+    
+.bg-black
+  background-color: $black
+  color: $white
+    
+.bg-pink
+  background-color: $pink
+  color: $white  
+    
+@keyframes reveal 
+  0%
+    transform: translate(0)
+    opacity: 1
+  
+  50%
+    opacity: 1
+  
+  100%
+    transform: translate(100%)
+    opacity: 0
+  
+@keyframes reveal-colored
+  0%
+    max-width: 0
+  
+  100% 
+    max-width: 100%
+  
 </style>
 </head>
 <body>
 <script src="loaders.js" type="text/javascript"></script>
-<div class="container">
- 
-<h4>I</h2>
-<h4>❤</h2>
-<h4>U</h2>
-<h2>BRO</h2>
-
-  </div>
+section.bg-colored
+  h1 Sorry!
+section.bg-white
+  h1 Sorry!
+section.bg-black
+  div(data-scroll)
+    h1 Sorry!
+section.bg-pink
+  div(data-scroll)
+    h1 Sorry!
+  <script>
+  ;(function() {
+  var PERCENT = 60;
+  var DEFAULT = 300; 
+  var oldScroll = 0;
   
-
-
-
+  var sections = document.querySelectorAll('section > [data-scroll]')
+  var onScroll = function() {
+    var windowHeight = window.innerHeight;
+    var offset = window.pageYOffset;
+    if (offset <= oldScroll) {
+      return;
+    }
+    
+    sections.forEach(function(section) {
+      var sectionOffset = section.offsetTop + section.offsetHeight;
+      var calc = -1 * (offset + .8 * windowHeight - sectionOffset);
+      section.style.transform = 'translateX(' + (calc >= 0 ? calc : 0) + 'px)';
+    });
+    
+    oldScroll = offset;
+  }
+  
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+})();
+  </script>
 </body>
 </html>
